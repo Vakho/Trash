@@ -1,0 +1,70 @@
+<form (submit)="addTodo()">
+  <input
+    type="text"
+    name="inputTodo"
+    placeholder="Enter text..."
+    class="todo-input"
+    [(ngModel)]="inputTodo"
+  />
+  <select>
+    <option value="" disabled selected>Difficulty</option>
+    <option
+      name="level"
+      *ngFor="let name of enumKeys"
+      value="name"
+      [(ngModel)]="level"
+    >
+      {{ dificultyLevels[name] }}
+    </option>
+  </select>
+  <input type="submit" value="Add" class="btn-add" />
+</form>
+
+<div class="container">
+  <div class="todos">
+    <h1>Active</h1>
+    <div class="todo" *ngFor="let todo of todos; let i = index">
+      <section *ngIf="todo.status.toString() === todoStatus.Active">
+        <div class="content">{{ i }}</div>
+        <div class="content">{{ todo.content }}</div>
+        <div
+          class="dificulty-level-box dificulty-level-box-{{ todo.difficulty }}"
+        >
+          {{ todo.difficulty }}
+        </div>
+        <button (click)="changeStatus(i, todoStatus.InProgress)">></button>
+      </section>
+    </div>
+  </div>
+  <div class="todos">
+    <h1>In Progress</h1>
+    <div class="todo" *ngFor="let todo of todos; let i = index">
+      <section *ngIf="todo.status === todoStatus.InProgress">
+        <div class="content">{{ i }}</div>
+        <div class="content">{{ todo.content }}</div>
+        <div
+          class="dificulty-level-box dificulty-level-box-{{ todo.difficulty }}"
+        >
+          {{ todo.difficulty }}
+        </div>
+        <button (click)="changeStatus(i, todoStatus.Done)">></button>
+        <button (click)="changeStatus(i, todoStatus.Active)"><</button>
+      </section>
+    </div>
+  </div>
+  <div class="todos">
+    <h1>Done</h1>
+    <div class="todo" *ngFor="let todo of todos; let i = index">
+      <section *ngIf="todo.status === todoStatus.Done">
+        <div class="content">{{ i }}</div>
+        <div class="content">{{ todo.content }}</div>
+        <div
+          class="dificulty-level-box dificulty-level-box-{{ todo.difficulty }}"
+        >
+          {{ todo.difficulty }}
+        </div>
+        <button (click)="changeStatus(i, todoStatus.InProgress)"><</button>
+      </section>
+    </div>
+  </div>
+</div>
